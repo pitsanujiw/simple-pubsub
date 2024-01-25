@@ -32,10 +32,10 @@ export class MachineInstance implements IMachineInstance {
         `[MachineInstance]:\tStock is unavailable please refill them.`
       );
       const lowStockWarningEvent = new MachineLowStockWarningEvent(this.id);
-      this.pubSubService.publish(lowStockWarningEvent);
-      console.warn(
-        `[MachineInstance]:\tPublished LowStockWarning event from machine ${this.id}.`
+      console.info(
+        `[MachineInstance]:\tPublishing ${lowStockWarningEvent.type()} event from machine ${this.id}....`
       );
+      this.pubSubService.publish(lowStockWarningEvent);
 
       return;
     }
@@ -53,19 +53,19 @@ export class MachineInstance implements IMachineInstance {
     );
     if (isStockLevelOk) {
       const stockLevelOkEvent = new MachineStockLevelOkEvent(this.id);
-      this.pubSubService.publish(stockLevelOkEvent);
-      console.log(
-        `[MachineInstance]:\tPublished StockLevelOk event from machine ${this.id}.`
+      console.info(
+        `[MachineInstance]:\tPublishing ${stockLevelOkEvent.type()} event from machine ${this.id}...`
       );
+      this.pubSubService.publish(stockLevelOkEvent);
       return;
     }
 
     if (isLowStockWarning) {
       const lowStockWarningEvent = new MachineLowStockWarningEvent(this.id);
-      this.pubSubService.publish(lowStockWarningEvent);
-      console.log(
-        `[MachineInstance]:\tPublished LowStockWarning event from machine ${this.id}.`
+      console.info(
+        `[MachineInstance]:\tPublishing ${lowStockWarningEvent.type()} event from machine ${this.id}...`
       );
+      this.pubSubService.publish(lowStockWarningEvent);
     }
   }
 
