@@ -17,18 +17,18 @@ export class PublishSubscribeService implements IPublishSubscribeService {
 
   public publish(event: IEvent): void {
     console.debug(
-      `[PublishSubscribeService]:\Processing ${event.type()} to publish message...`
+      `[PublishSubscribeService]:\tProcessing ${event.type()} to publish message...`
     );
     const hasSubscribers = this.subscriptions.has(event.type());
     if (!hasSubscribers) {
-      console.error("[PublishSubscribeService]:\t subscribe doesn't exist");
+      console.error("[PublishSubscribeService]:\tSubscribe doesn't exist");
 
       return;
     }
 
     const subscribers = this.subscriptions.get(event.type());
     if (!subscribers?.size) {
-      console.error("[PublishSubscribeService]:\t handle doesn't exist");
+      console.error("[PublishSubscribeService]:\tHandle doesn't exist");
 
       return;
     }
@@ -42,7 +42,7 @@ export class PublishSubscribeService implements IPublishSubscribeService {
     const key = this.getRegisterSubscription(type, handler);
     if (this.registerSubscriptions.has(key)) {
       console.error(
-        `[PublishSubscribeService]:\t ${handler.name()} had already to subscribe by ${type}`
+        `[PublishSubscribeService]:\t${handler.name()} had already to subscribe by ${type}`
       );
 
       return;
@@ -76,7 +76,7 @@ export class PublishSubscribeService implements IPublishSubscribeService {
     const subscribers = this.subscriptions.get(type);
     if (!subscribers?.size) {
       console.warn(
-        `[PublishSubscribeService]:\tSubscription: ${type} doesn't exist`
+        `[PublishSubscribeService]:\tSubscription - ${type} doesn't exist`
       );
 
       return;
@@ -87,7 +87,7 @@ export class PublishSubscribeService implements IPublishSubscribeService {
     this.registerSubscriptions.delete(key);
 
     console.log(
-      `[PublishSubscribeService]:\tUnsubscribed ${handler.name()} is completed.`
+      `[PublishSubscribeService]:\tUnsubscribed - ${handler.name()} is completed.`
     );
   }
 }

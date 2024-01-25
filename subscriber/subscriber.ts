@@ -8,14 +8,12 @@ export abstract class Subscriber implements ISubscriber {
   public abstract handle(event: IEvent): void;
 
   public getMachine(event: IEvent): MachineInstance | undefined {
-    const machineIds = this.machines.map((machine) => machine.id);
-
-    const index = machineIds.indexOf(event.machineId());
-    if (index === -1) {
+    const machineIndexIds = this.machines.findIndex((machine) => machine.id === event.machineId());
+    if (machineIndexIds === -1) {
       return undefined;
     }
 
-    return this.machines[index];
+    return this.machines[machineIndexIds];
   }
 
   public name(): string {

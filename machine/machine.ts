@@ -19,16 +19,17 @@ export class MachineInstance implements IMachineInstance {
 
   private handle(amount: number): void {
     if (amount === 0) {
-      console.error(`[MachineInstance]:\t amount is zero.`);
+      console.error(`[MachineInstance]:\tAmount is zero.`);
 
       return;
     }
 
     const currentStock = this.stockLevel;
     const newStock = this.stockLevel + amount;
+    
     if (newStock < 0) {
       console.warn(
-        `[MachineInstance]:\t stock is unavailable please refill them.`
+        `[MachineInstance]:\tStock is unavailable please refill them.`
       );
       const lowStockWarningEvent = new MachineLowStockWarningEvent(this.id);
       this.pubSubService.publish(lowStockWarningEvent);
@@ -48,7 +49,7 @@ export class MachineInstance implements IMachineInstance {
       currentStock > this.threshold && newStock <= this.threshold;
 
     console.log(
-      `[MachineInstance]:\tAdjusted stock for machine ${this.id} from ${currentStock} to ${newStock}.`
+      `[MachineInstance]:\tUpdated stock for machine ${this.id} from ${currentStock} to ${newStock}.`
     );
     if (isStockLevelOk) {
       const stockLevelOkEvent = new MachineStockLevelOkEvent(this.id);
